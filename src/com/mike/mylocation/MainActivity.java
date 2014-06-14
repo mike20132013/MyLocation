@@ -37,7 +37,6 @@ public class MainActivity extends FragmentActivity implements LocationListener,
     String addressText;
     double latitude;
     double longitude;
-    String testCommit;
 
 	
 	@Override
