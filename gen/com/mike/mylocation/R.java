@@ -221,7 +221,7 @@ containing a value of this type.
         public static final int ic_plusone_tall_off_client=0x7f02001c;
     }
     public static final class id {
-        public static final int action_settings=0x7f05000b;
+        public static final int action_settings=0x7f05000c;
         public static final int addressTextView=0x7f050008;
         public static final int attachButton=0x7f050006;
         public static final int contentText=0x7f05000a;
@@ -230,6 +230,7 @@ containing a value of this type.
         public static final int map=0x7f050007;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
+        public static final int pager=0x7f05000b;
         public static final int satellite=0x7f050002;
         public static final int terrain=0x7f050003;
         public static final int view1=0x7f050005;
@@ -240,6 +241,7 @@ containing a value of this type.
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int custom_info=0x7f030001;
+        public static final int home_layout=0x7f030002;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
