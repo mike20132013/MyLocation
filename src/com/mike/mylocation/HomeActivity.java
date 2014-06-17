@@ -9,10 +9,18 @@ import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 
+import com.google.android.gms.maps.SupportMapFragment;
 import com.mike.adapters.AllPagesAdapter;
+import com.mike.adapters.HistoryFragment;
+import com.mike.adapters.HomeFragment;
+import com.mike.adapters.NearbyPlaces;
+import com.mike.listeners.FragmentTabListener;
 
 /**
  * @author mickey20142014
@@ -20,21 +28,14 @@ import com.mike.adapters.AllPagesAdapter;
  */
 @SuppressLint("NewApi")
 public class HomeActivity extends FragmentActivity implements
-		ActionBar.TabListener {
+		ActionBar.TabListener, OnPageChangeListener {
 
 	public ViewPager viewPager;
 	private AllPagesAdapter mAdapter;
 	private ActionBar actionBar;
-	private String[] tabs = { "Home", "History" };
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
-	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_layout);
 
@@ -48,55 +49,14 @@ public class HomeActivity extends FragmentActivity implements
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setSubtitle("Save you location anytime and at anyplace");
 
-		// Add the tabs here
-		/*for (String tab_name : tabs) {
-			actionBar.addTab(actionBar.newTab().setText(tab_name)
-					.setTabListener(this));
-		}*/
 		actionBar.addTab(actionBar.newTab().setText("Maps Home")
-				
-				.setTabListener(new TabListener() {
-					
-					@Override
-					public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void onTabSelected(Tab tab, FragmentTransaction ft) {
-						viewPager.setCurrentItem(tab.getPosition());
-						
-					}
-					
-					@Override
-					public void onTabReselected(Tab tab, FragmentTransaction ft) {
-						viewPager.setCurrentItem(tab.getPosition());
-						
-					}
-				}));
-		
+				.setTabListener(this));
+
+		actionBar.addTab(actionBar.newTab().setText("Nearby Places")
+				.setTabListener(this));
+
 		actionBar.addTab(actionBar.newTab().setText("Location History")
-				.setTabListener(new TabListener() {
-					
-					@Override
-					public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-					@Override
-					public void onTabSelected(Tab tab, FragmentTransaction ft) {
-						viewPager.setCurrentItem(tab.getPosition());
-						
-					}
-					
-					@Override
-					public void onTabReselected(Tab tab, FragmentTransaction ft) {
-						viewPager.setCurrentItem(tab.getPosition());
-						
-					}
-				}));
+				.setTabListener(this));
 
 		viewPager
 				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -124,43 +84,40 @@ public class HomeActivity extends FragmentActivity implements
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * android.app.ActionBar.TabListener#onTabReselected(android.app.ActionBar
-	 * .Tab, android.app.FragmentTransaction)
+	 * Tab Listener
 	 */
+
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
-		viewPager.setCurrentItem(tab.getPosition());
-
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * android.app.ActionBar.TabListener#onTabSelected(android.app.ActionBar
-	 * .Tab, android.app.FragmentTransaction)
-	 */
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
 		viewPager.setCurrentItem(tab.getPosition());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * android.app.ActionBar.TabListener#onTabUnselected(android.app.ActionBar
-	 * .Tab, android.app.FragmentTransaction)
-	 */
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		// TODO Auto-generated method stub
+	}
 
+	/*
+	 * Scroll Listener
+	 */
+	@Override
+	public void onPageScrollStateChanged(int position) {
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+//		Fragment f = getSupportFragmentManager().findFragmentById(R.id.map);
+//	    if (f != null){ 
+//	        getSupportFragmentManager().beginTransaction().remove(f).commitAllowingStateLoss();
+//	    }
+	}
+
+	@Override
+	public void onPageSelected(int position) {
+		actionBar.setSelectedNavigationItem(position);
 	}
 
 }

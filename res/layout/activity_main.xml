@@ -1,41 +1,56 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333333"
+    android:background="#222222"
     android:orientation="vertical"
     android:paddingBottom="5dp"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:paddingTop="5dp" >
 
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="#000000" />
-
-    <Button
-        android:id="@+id/attachButton"
+    <LinearLayout
+        android:id="@+id/mainLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#111111"
-        android:text="SaveLocation"
-        android:textColor="#f3f3f3" >
-    </Button>
+        android:background="#333333"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:visibility="visible" >
 
-    <fragment
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        class="com.google.android.gms.maps.SupportMapFragment" />
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#000000" />
 
-    <TextView
-        android:id="@+id/addressTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#111111"
-        android:gravity="center"
-        android:text="Address"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#cccccc" />
-    </LinearLayout>
+        <Button
+            android:id="@+id/attachButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#111111"
+            android:text="Save Location"
+            android:textColor="#f3f3f3" >
+        </Button>
+
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            class="com.google.android.gms.maps.SupportMapFragment" />
+
+        <TextView
+            android:id="@+id/addressTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#111111"
+            android:gravity="center"
+            android:text="Address"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#cccccc" />
+    </LinearLayout>
+
+</ScrollView>

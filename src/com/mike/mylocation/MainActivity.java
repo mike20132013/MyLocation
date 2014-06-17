@@ -1,4 +1,4 @@
-package com.mike.mylocation;
+/*package com.mike.mylocation;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -72,7 +72,7 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 
 		mAppUtils = new AppUtils(this);
 		if (mAppUtils.servicesOK()) {
-			//Toast.makeText(this, "Ready to map!!", Toast.LENGTH_LONG).show();
+			// Toast.makeText(this, "Ready to map!!", Toast.LENGTH_LONG).show();
 			setContentView(R.layout.activity_main);
 
 			attachButton = (Button) findViewById(R.id.attachButton);
@@ -176,29 +176,23 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 			}
 
 		});
-		//For Custom Info
-		/*map.setInfoWindowAdapter(new InfoWindowAdapter() {
-
-			@Override
-			public View getInfoWindow(Marker arg0) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public View getInfoContents(Marker marker) {
-				View myContentsView = getLayoutInflater().inflate(
-						R.layout.custom_info, null);
-				TextView tvTitle = ((TextView) myContentsView
-						.findViewById(R.id.headText));
-				tvTitle.setText(marker.getTitle());
-				TextView tvSnippet = ((TextView) myContentsView
-						.findViewById(R.id.contentText));
-				tvSnippet.setText(marker.getSnippet());
-				return myContentsView;
-
-			}
-		});*/
+		// For Custom Info
+		
+		 * map.setInfoWindowAdapter(new InfoWindowAdapter() {
+		 * 
+		 * @Override public View getInfoWindow(Marker arg0) { // TODO
+		 * Auto-generated method stub return null; }
+		 * 
+		 * @Override public View getInfoContents(Marker marker) { View
+		 * myContentsView = getLayoutInflater().inflate( R.layout.custom_info,
+		 * null); TextView tvTitle = ((TextView) myContentsView
+		 * .findViewById(R.id.headText)); tvTitle.setText(marker.getTitle());
+		 * TextView tvSnippet = ((TextView) myContentsView
+		 * .findViewById(R.id.contentText));
+		 * tvSnippet.setText(marker.getSnippet()); return myContentsView;
+		 * 
+		 * } });
+		 
 
 		Geocoder geoCoder = new Geocoder(this);
 
@@ -362,18 +356,6 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.FragmentActivity#onPause()
-	 */
-	@Override
-	protected void onPause() {
-
-		super.onPause();
-		locationManager.removeUpdates(this);
-
-	}
 
 	void stopGps() {
 
@@ -386,11 +368,24 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 
 	}
 
-	/*
+	
+	 * (non-Javadoc)
+	 * 
+	 * @see android.support.v4.app.FragmentActivity#onPause()
+	 
+	@Override
+	protected void onPause() {
+
+		super.onPause();
+		locationManager.removeUpdates(this);
+
+	}
+	
+	
 	 * (non-Javadoc)
 	 * 
 	 * @see android.support.v4.app.FragmentActivity#onDestroy()
-	 */
+	 
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
@@ -398,11 +393,11 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 		locationManager.removeUpdates(this);
 	}
 
-	/*
+	
 	 * (non-Javadoc)
 	 * 
 	 * @see android.support.v4.app.FragmentActivity#onResume()
-	 */
+	 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -412,3 +407,4 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 	}
 
 }
+*/

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:paddingBottom="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="5dp"
+    android:background="#222222">
+
+    <TextView
+        android:id="@+id/head_textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Places Near You"
+        android:textColor="#cccccc"
+        android:background="#333333"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp" 
+        android:background="#f3f3f3">
+        
+    </View>
+    <TextView
+        android:id="@+id/food_textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Food"
+        android:textColor="#cccccc"
+        android:background="#333333"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ListView
+        android:id="@+id/foodListView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" >
+    </ListView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp" 
+        android:background="#f3f3f3">
+        
+    </View>
+    <TextView
+        android:id="@+id/gas_textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Gas"
+        android:textColor="#cccccc"
+        android:background="#333333"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ListView
+        android:id="@+id/gasListView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" >
+    </ListView>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp" 
+        android:background="#f3f3f3">
+        
+    </View>
+    <TextView
+        android:id="@+id/cafe_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Gas"
+        android:textColor="#cccccc"
+        android:background="#333333"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ListView
+        android:id="@+id/cafeListView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" >
+    </ListView>
+
+</LinearLayout>

@@ -5,13 +5,13 @@ package com.mike.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 
 /**
  * @author mickey20142014
  * 
  */
-public class AllPagesAdapter extends FragmentStatePagerAdapter {
+public class AllPagesAdapter extends FragmentPagerAdapter {
 
 	public AllPagesAdapter(FragmentManager fm) {
 
@@ -29,8 +29,12 @@ public class AllPagesAdapter extends FragmentStatePagerAdapter {
 
 		case 1:
 
-			return new HistoryFragment();
+			return new NearbyPlaces();
 
+		case 2:
+
+			return new HistoryFragment();
+			
 		}
 		return null;
 
@@ -38,7 +42,7 @@ public class AllPagesAdapter extends FragmentStatePagerAdapter {
 
 	@Override
 	public int getCount() {
-		return 2;
+		return 3;
 	}
 
 }

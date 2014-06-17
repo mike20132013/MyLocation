@@ -3,11 +3,19 @@
  */
 package com.mike.utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Locale;
 
-import android.app.Dialog;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
@@ -18,7 +26,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.mike.mylocation.MainActivity;
 
 /**
  * @author mickey20142014
@@ -28,7 +35,7 @@ public class AppUtils {
 
 	Context context;
 	private static final int GPS_ERRORDIALOG_REQUEST = 9001;
-	MainActivity activity;
+
 	double[] gps;
 
 	public AppUtils(Context newContext) {
@@ -92,9 +99,12 @@ public class AppUtils {
 			String zipCode = list.get(0).getPostalCode();
 			String city = list.get(0).getAddressLine(0);
 			String city1 = list.get(0).getLocality();
-			address = "Latitude : " + String.valueOf(gps[0]) + "\n"
+			//Main
+			/*address = "Latitude : " + String.valueOf(gps[0]) + "\n"
 					+ "Longitude: " + String.valueOf(gps[1]) + "\n" 
 					+ "ZIP : " + zipCode + "\n"
+					+ "ADDRESS : " + city + "\n" + "LOCALITY : " + city1;*/
+			address = "ZIP : " + zipCode + "\n"
 					+ "ADDRESS : " + city + "\n" + "LOCALITY : " + city1;
 			//Toast.makeText(context, address, Toast.LENGTH_LONG).show();
 			Log.d("Data : ", address);
@@ -113,10 +123,13 @@ public class AppUtils {
 				String zipCode = list.get(0).getPostalCode();
 				String city = list.get(0).getAddressLine(0);
 				String city1 = list.get(0).getLocality();
-				address = "\n" + String.valueOf(gps[0]) + "\n"
+				/*address = "\n" + String.valueOf(gps[0]) + "\n"
 						+ String.valueOf(gps[1]) + "\n" + "ZIP : " + zipCode
 						+ "\n" + "ADDRESS : " + city + "\n" + "LOCALITY : "
-						+ city1;
+						+ city1;*/
+				
+				address = "ZIP : " + zipCode + "\n"
+						+ "ADDRESS : " + city + "\n" + "LOCALITY : " + city1;
 				//Toast.makeText(context, "GPS Data: " + address,
 						//Toast.LENGTH_LONG).show();
 				Log.d("Gps Data : ", address);
@@ -136,5 +149,49 @@ public class AppUtils {
 
 		return address;
 	}
+	
+	public String loadJSON(String someURL) {
+
+        String json = null;
+        HttpClient mHttpClient = new DefaultHttpClient();
+        HttpGet mHttpGet = new HttpGet(someURL);
+
+        try {
+
+            HttpResponse mHttpResponse = mHttpClient.execute(mHttpGet);
+            StatusLine statusline = mHttpResponse.getStatusLine();
+            int statusCode = statusline.getStatusCode();
+            if (statusCode != 200) {
+
+                return null;
+
+            }
+            InputStream jsonStream = mHttpResponse.getEntity().getContent();
+
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(jsonStream));
+
+            StringBuilder builder = new StringBuilder();
+            String line;
+            //jsonStream.close();
+            while ((line = reader.readLine()) != null) {
+
+                builder.append(line);
+
+            }
+
+            json = builder.toString();
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+
+            return null;
+        }
+        mHttpClient.getConnectionManager().shutdown();
+        return json;
+
+
+    }
 
 }
