@@ -16,6 +16,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.mike.mylocation.ClearingCodeActivity;
 
 /**
  * @author mickey20142014
@@ -37,6 +40,9 @@ public class AppUtils {
 	private static final int GPS_ERRORDIALOG_REQUEST = 9001;
 
 	double[] gps;
+	
+	String address;
+	private static final String NA = "-NA-";
 
 	public AppUtils(Context newContext) {
 
@@ -50,15 +56,15 @@ public class AppUtils {
 		int isAvailable = GooglePlayServicesUtil
 				.isGooglePlayServicesAvailable(context);
 		if (isAvailable == ConnectionResult.SUCCESS) {
-
+			
 			return true;
 		} else if (GooglePlayServicesUtil.isUserRecoverableError(isAvailable)) {
 
 			Toast.makeText(context, "Cant connect!!", Toast.LENGTH_SHORT)
 			.show();
-			/*Dialog dialog = GooglePlayServicesUtil.getErrorDialog(isAvailable,
-					activity, GPS_ERRORDIALOG_REQUEST);
-			dialog.show();*/
+//			Dialog dialog = GooglePlayServicesUtil.getErrorDialog(isAvailable,
+//					activity, GPS_ERRORDIALOG_REQUEST);
+//			dialog.show();
 		} else {
 
 			Toast.makeText(context, "Cant connect!!", Toast.LENGTH_SHORT)
@@ -69,7 +75,7 @@ public class AppUtils {
 
 	}
 	
-	public String getLocation(Context context, String address) {
+	public String getLocation(Context context) {
 
 		LocationManager lm = (LocationManager) context
 				.getSystemService(Context.LOCATION_SERVICE);
@@ -97,15 +103,36 @@ public class AppUtils {
 			gps[0] = l.getLatitude();
 			gps[1] = l.getLongitude();
 			String zipCode = list.get(0).getPostalCode();
-			String city = list.get(0).getAddressLine(0);
-			String city1 = list.get(0).getLocality();
+			String AddressLine = list.get(0).getAddressLine(0);
+			String locality = list.get(0).getLocality();
 			//Main
-			/*address = "Latitude : " + String.valueOf(gps[0]) + "\n"
-					+ "Longitude: " + String.valueOf(gps[1]) + "\n" 
-					+ "ZIP : " + zipCode + "\n"
-					+ "ADDRESS : " + city + "\n" + "LOCALITY : " + city1;*/
-			address = "ZIP : " + zipCode + "\n"
-					+ "ADDRESS : " + city + "\n" + "LOCALITY : " + city1;
+//			address = "Latitude : " + String.valueOf(gps[0]) + "\n"
+//					+ "Longitude: " + String.valueOf(gps[1]) + "\n" 
+//					+ "ZIP : " + zipCode + "\n"
+//					+ "ADDRESS : " + AddressLine + "\n" + "LOCALITY : " + locality;
+			
+			if(zipCode==null){
+				
+			address = "ZIP : " + NA + "\n"
+						+ "ADDRESS : " + AddressLine + "\n" + "LOCALITY : " + locality;
+				
+			}else if(AddressLine==null){
+				
+				address = "ZIP : " + zipCode + "\n"
+						+ "ADDRESS : " + NA + "\n" + "LOCALITY : " + locality;
+				
+			}else if(locality==null){
+				
+				address = "ZIP : " + zipCode + "\n"
+						+ "ADDRESS : " + AddressLine + "\n" + "LOCALITY : " + NA;
+				
+			}else{
+				
+				address = "ZIP : " + zipCode + "\n"
+						+ "ADDRESS : " + AddressLine + "\n" + "LOCALITY : " + locality;
+			
+			}
+			
 			//Toast.makeText(context, address, Toast.LENGTH_LONG).show();
 			Log.d("Data : ", address);
 
@@ -121,15 +148,36 @@ public class AppUtils {
 			if (list.size() > 0 && list != null) {
 
 				String zipCode = list.get(0).getPostalCode();
-				String city = list.get(0).getAddressLine(0);
-				String city1 = list.get(0).getLocality();
-				/*address = "\n" + String.valueOf(gps[0]) + "\n"
+				String AddressLine = list.get(0).getAddressLine(0);
+				String locality = list.get(0).getLocality();
+				address = "\n" + String.valueOf(gps[0]) + "\n"
 						+ String.valueOf(gps[1]) + "\n" + "ZIP : " + zipCode
-						+ "\n" + "ADDRESS : " + city + "\n" + "LOCALITY : "
-						+ city1;*/
+						+ "\n" + "ADDRESS : " + AddressLine + "\n" + "LOCALITY : "
+						+ locality;
 				
-				address = "ZIP : " + zipCode + "\n"
-						+ "ADDRESS : " + city + "\n" + "LOCALITY : " + city1;
+				
+				if(zipCode==null){
+					
+					address = "ZIP : " + NA + "\n"
+								+ "ADDRESS : " + AddressLine + "\n" + "LOCALITY : " + locality;
+						
+					}else if(AddressLine==null){
+						
+						address = "ZIP : " + zipCode + "\n"
+								+ "ADDRESS : " + NA + "\n" + "LOCALITY : " + locality;
+						
+					}else if(locality==null){
+						
+						address = "ZIP : " + zipCode + "\n"
+								+ "ADDRESS : " + AddressLine + "\n" + "LOCALITY : " + NA;
+						
+					}else{
+						
+						address = "ZIP : " + zipCode + "\n"
+								+ "ADDRESS : " + AddressLine + "\n" + "LOCALITY : " + locality;
+					
+					}
+	
 				//Toast.makeText(context, "GPS Data: " + address,
 						//Toast.LENGTH_LONG).show();
 				Log.d("Gps Data : ", address);

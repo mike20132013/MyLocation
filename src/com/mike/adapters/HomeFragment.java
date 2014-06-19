@@ -46,6 +46,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mike.mylocation.ClearingCodeActivity;
 import com.mike.mylocation.R;
 import com.mike.utils.AppUtils;
 import com.mike.utils.FileCache;
@@ -91,6 +92,8 @@ public class HomeFragment extends Fragment implements LocationListener,
 	public static String FIFTH_URL = "&sensor=true";
 	public static String SIXTH_URL = "&key=AIzaSyAaDaMUimX4NRgapY-keH18ZYnAmHRNnn4";
 
+	ClearingCodeActivity activity;
+	
 	private static View view;
 
 	@Override
@@ -211,7 +214,7 @@ public class HomeFragment extends Fragment implements LocationListener,
 	@Override
 	public void onLocationChanged(Location location) {
 
-		addressLine = mAppUtils.getLocation(getActivity(), "");
+		addressLine = mAppUtils.getLocation(getActivity());
 
 		// Getting latitude of the current location
 		latitude = location.getLatitude();

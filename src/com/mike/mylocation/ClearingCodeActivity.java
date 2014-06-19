@@ -1,16 +1,14 @@
+/**
+ * 
+ */
 package com.mike.mylocation;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -18,11 +16,12 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,50 +32,79 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
-import com.google.android.gms.maps.GoogleMap.SnapshotReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mike.customviews.CustomImageView;
 import com.mike.utils.AppUtils;
-import com.mike.utils.FileCache;
-import com.mike.utils.Utils;
 
-public class MainActivity extends FragmentActivity implements LocationListener,
-		OnMapClickListener, OnMapLongClickListener {
+/**
+ * @author mickey20142014
+ * 
+ */
+public class ClearingCodeActivity extends FragmentActivity implements
+		LocationListener, OnMapClickListener, OnMapLongClickListener {
 
 	private static final int GPS_ERRORDIALOG_REQUEST = 9001;
-
+	LocationManager locationManager;
+	// Views
 	GoogleMap map;
+	TextView addressTextV;
+	//Button attachButton;
+	CustomImageView attachButton;
+
+	// Utils
+	AppUtils mAppUtils;
+
+	Context context;
 	List<Address> matches;
 	String addressText;
 	String addressLine;
 	double latitude;
 	double longitude;
-	AppUtils mAppUtils;
-	FileCache mCache;
-	Context context;
-	private File cacheDir;
-	Bitmap bDecode;
-	File f;
-	File outputFile;
-	LocationManager locationManager;
-	TextView addressTextV;
-	Button attachButton;
-	ClearingCodeActivity activity;
-	
+	String LatAndLong;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// setContentView(R.layout.activity_main);
 		context = this;
 
 		mAppUtils = new AppUtils(this);
 		if (mAppUtils.servicesOK()) {
 			// Toast.makeText(this, "Ready to map!!", Toast.LENGTH_LONG).show();
 			setContentView(R.layout.activity_main);
-
-			attachButton = (Button) findViewById(R.id.attachButton);
+			
+			//attachButton = (Button) findViewById(R.id.attachButton);
 			addressTextV = (TextView) findViewById(R.id.addressTextView);
+			attachButton = (CustomImageView)findViewById(R.id.attachButton);
+				
+			addressTextV.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					
+					addressTextV.setBackgroundColor(Color.parseColor("#1C8B98"));
+					
+				}
+			});
+			
+			/*addressTextV.setOnTouchListener(new OnTouchListener() {
+				
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					
+					if(event.getAction()==MotionEvent.ACTION_UP){
+						
+						addressTextV.setAlpha(15);
+						return true;
+					}
+					
+					return false;
+				}
+			});*/
+			
 			attachButton.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -85,12 +113,11 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 					Toast.makeText(context, "Location Saved",
 							Toast.LENGTH_SHORT).show();
 					if (locationManager != null) {
-						CaptureScreenShot();
-						// stopGps();
+						// CaptureScreenShot();
 					}
 				}
 			});
-
+				
 			// Getting reference to the SupportMapFragment of activity_main.xml
 			SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.map);
@@ -123,23 +150,17 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 			setContentView(R.layout.activity_main);
 
 		}
-
-	}
-
-	
-	
-	@Override
-	public void onProviderDisabled(String provider) {
-
 	}
 
 	@Override
-	public void onProviderEnabled(String provider) {
+	public void onMapLongClick(LatLng arg0) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
+	public void onMapClick(LatLng arg0) {
+		// TODO Auto-generated method stub
 
 	}
 
@@ -147,7 +168,6 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 	public void onLocationChanged(Location location) {
 
 		addressLine = mAppUtils.getLocation(context);
-
 		// Getting latitude of the current location
 		latitude = location.getLatitude();
 
@@ -163,21 +183,27 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 		// Zoom in the Google Map
 		map.animateCamera(CameraUpdateFactory.zoomTo(12));
 
-		map.addMarker(
-				new MarkerOptions().position(new LatLng(latitude, longitude))
-						.title("My Location" + "\n")).showInfoWindow();
-
-		map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-
-			@Override
-			public boolean onMarkerClick(Marker marker) {
-
-				marker.showInfoWindow();
-
-				return false;
-			}
-
-		});
+		
+		if(latLng!=null){
+				
+			// Working marker
+			map.addMarker(
+					new MarkerOptions().position(new LatLng(latitude, longitude))
+					.title("My Location" + "\n").snippet(latLng.toString()))
+					.showInfoWindow();
+			
+			map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+				
+				@Override
+				public boolean onMarkerClick(Marker marker) {
+					
+					marker.showInfoWindow();
+					
+					return false;
+				}
+				
+			});
+		}
 
 		Geocoder geoCoder = new Geocoder(this);
 
@@ -192,8 +218,29 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 				.getMaxAddressLineIndex() > 0 ? bestMatch.getAddressLine(0)
 				: "", bestMatch.getLocality(), bestMatch.getCountryName());
 
+		Double thisLat = latitude;
+		Double thisLong = longitude;
+		
+		
+		if(thisLat==null){
+			
+			LatAndLong = "Latitude : " + "-NA-" + "\n"
+					+ "Longitude : " + String.valueOf(thisLong) + "\n";
+			
+		}else if(thisLong==null){
+			
+			LatAndLong = "Latitude : " + String.valueOf(thisLat) + "\n"
+					+ "Longitude : " + "-NA-" + "\n";
+			
+		}else{
+			
+			LatAndLong = "Latitude : " + String.valueOf(thisLat) + "\n"
+					+ "Longitude : " + String.valueOf(thisLong) + "\n";
+		}
+		
 		if (addressLine != null) {
-			addressTextV.setText(addressLine);
+			// addressTextV.setText(addressLine);
+			addressTextV.setText(LatAndLong + addressLine);
 		} else {
 			Toast.makeText(context, "Location Data Null", Toast.LENGTH_SHORT)
 					.show();
@@ -202,153 +249,49 @@ public class MainActivity extends FragmentActivity implements LocationListener,
 	}
 
 	@Override
-	public void onMapLongClick(LatLng point) {
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void onMapClick(LatLng point) {
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
 
+	}
+	
 	public boolean servicesOK() {
 
 		int isAvailable = GooglePlayServicesUtil
-				.isGooglePlayServicesAvailable(this);
-
+				.isGooglePlayServicesAvailable(context);
 		if (isAvailable == ConnectionResult.SUCCESS) {
-
+								
 			return true;
-
 		} else if (GooglePlayServicesUtil.isUserRecoverableError(isAvailable)) {
 
+			Toast.makeText(context, "Cant connect!!", Toast.LENGTH_SHORT)
+			.show();
 			Dialog dialog = GooglePlayServicesUtil.getErrorDialog(isAvailable,
 					this, GPS_ERRORDIALOG_REQUEST);
 			dialog.show();
-
 		} else {
 
-			Toast.makeText(this, "Cant connect!!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "Cant connect!!", Toast.LENGTH_SHORT)
+					.show();
 
 		}
 		return false;
-	}
-
-	public Bitmap getBitmapShot(String url) {
-
-		mCache = new FileCache(context);
-		f = mCache.getFile(url);
-		bDecode = decodeFile(f);
-		if (bDecode != null)
-			return bDecode;
-		SnapshotReadyCallback callback = new SnapshotReadyCallback() {
-
-			@Override
-			public void onSnapshotReady(Bitmap snapshot) {
-
-				bDecode = snapshot;
-				try {
-					FileInputStream fin = new FileInputStream(f);
-					FileOutputStream fout = new FileOutputStream(f + ".png");
-					Utils.CopyStream(fin, fout);
-					fout.close();
-					bDecode = decodeFile(f);
-
-				} catch (FileNotFoundException e) {
-
-					e.printStackTrace();
-				} catch (IOException e) {
-
-					e.printStackTrace();
-				}
-			}
-		};
-		map.snapshot(callback);
-		return bDecode;
-	}
-
-	private Bitmap decodeFile(File f) {
-		try {
-			// decode image size
-			BitmapFactory.Options o = new BitmapFactory.Options();
-			o.inJustDecodeBounds = true;
-			BitmapFactory.decodeStream(new FileInputStream(f), null, o);
-
-			// Find the correct scale value. It should be the power of 2.
-			final int REQUIRED_SIZE = 70;
-			int width_tmp = o.outWidth, height_tmp = o.outHeight;
-			int scale = 1;
-			while (true) {
-				if (width_tmp / 2 < REQUIRED_SIZE
-						|| height_tmp / 2 < REQUIRED_SIZE)
-					break;
-				width_tmp /= 2;
-				height_tmp /= 2;
-				scale *= 2;
-			}
-
-			// decode with inSampleSize
-			BitmapFactory.Options o2 = new BitmapFactory.Options();
-			o2.inSampleSize = scale;
-			return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
-		} catch (FileNotFoundException e) {
-
-		}
-		return null;
-	}
-
-	public void CaptureScreenShot() {
-
-		mCache = new FileCache(context);
-
-		SnapshotReadyCallback callback = new SnapshotReadyCallback() {
-			Bitmap bitmap;
-
-			@Override
-			public void onSnapshotReady(Bitmap snapshot) {
-
-				bitmap = snapshot;
-				// bitmap = decodeFile(cacheDir);
-				try {
-					if (android.os.Environment.getExternalStorageState()
-							.equals(android.os.Environment.MEDIA_MOUNTED)) {
-						cacheDir = new File(
-								Environment.getExternalStorageDirectory(),
-								"LocationApp");
-						cacheDir.mkdirs();
-						outputFile = new File(cacheDir, "Image");
-					}
-					FileOutputStream out = new FileOutputStream(outputFile + ""
-							+ System.currentTimeMillis() + ".png");
-					// bitmap = decodeFile(outputFile);
-					bitmap.compress(Bitmap.CompressFormat.PNG, 50, out);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		};
-		map.snapshot(callback);
 
 	}
-
-	void stopGps() {
-
-		if (locationManager != null) {
-			locationManager.removeUpdates(this);
-		}
-		locationManager = null;
-		Toast.makeText(context, "Location Removed Temperorily",
-				Toast.LENGTH_SHORT).show();
-
-	}
+	
+	
+	
 
 	@Override
 	protected void onPause() {
