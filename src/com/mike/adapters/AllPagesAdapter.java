@@ -30,10 +30,6 @@ public class AllPagesAdapter extends FragmentPagerAdapter {
 		case 1:
 
 			return new NearbyPlaces();
-
-		case 2:
-
-			return new HistoryFragment();
 			
 		}
 		return null;
@@ -42,7 +38,7 @@ public class AllPagesAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		return 3;
+		return 2;
 	}
 
 }

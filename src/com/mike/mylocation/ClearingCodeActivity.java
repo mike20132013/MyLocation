@@ -6,6 +6,10 @@ package com.mike.mylocation;
 import java.io.IOException;
 import java.util.List;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -17,12 +21,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.view.animation.Animation;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +46,7 @@ import com.mike.utils.AppUtils;
  * @author mickey20142014
  * 
  */
-public class ClearingCodeActivity extends FragmentActivity implements
+@SuppressLint("NewApi") public class ClearingCodeActivity extends FragmentActivity implements
 		LocationListener, OnMapClickListener, OnMapLongClickListener {
 
 	private static final int GPS_ERRORDIALOG_REQUEST = 9001;
@@ -64,7 +67,7 @@ public class ClearingCodeActivity extends FragmentActivity implements
 	double latitude;
 	double longitude;
 	String LatAndLong;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,7 +78,7 @@ public class ClearingCodeActivity extends FragmentActivity implements
 		if (mAppUtils.servicesOK()) {
 			// Toast.makeText(this, "Ready to map!!", Toast.LENGTH_LONG).show();
 			setContentView(R.layout.activity_main);
-			
+					
 			//attachButton = (Button) findViewById(R.id.attachButton);
 			addressTextV = (TextView) findViewById(R.id.addressTextView);
 			attachButton = (CustomImageView)findViewById(R.id.attachButton);

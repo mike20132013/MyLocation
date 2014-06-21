@@ -62,7 +62,7 @@ public class SplashActivity extends Activity implements
 	private void startApp() {
 		// Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
 		Intent intent = new Intent(SplashActivity.this,
-				ClearingCodeActivity.class);
+				TabActivity.class);
 		startActivity(intent);
 	}
 

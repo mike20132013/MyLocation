@@ -11,6 +11,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.animation.ObjectAnimator;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -24,6 +25,8 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.InflateException;
@@ -46,6 +49,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mike.customviews.CustomImageView;
 import com.mike.mylocation.ClearingCodeActivity;
 import com.mike.mylocation.R;
 import com.mike.utils.AppUtils;
@@ -83,6 +87,7 @@ public class HomeFragment extends Fragment implements LocationListener,
 	ProgressBar mProgressBar;
 	ProgressDialog mProgressDialog;
 	SupportMapFragment fm;
+	Vibrator mVibrater;
 
 	public static final String MAIN_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=42.29543187,-71.47470374&radius=1000&types=food&sensor=true&key=AIzaSyAaDaMUimX4NRgapY-keH18ZYnAmHRNnn4";
 	public static String FIRST_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
@@ -93,8 +98,13 @@ public class HomeFragment extends Fragment implements LocationListener,
 	public static String SIXTH_URL = "&key=AIzaSyAaDaMUimX4NRgapY-keH18ZYnAmHRNnn4";
 
 	ClearingCodeActivity activity;
+	CustomImageView mCustomImageView;
 	
 	private static View view;
+	private Handler mHandler;
+	private Runnable mRunnable;
+	
+	ObjectAnimator mObjectAnimator;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -117,7 +127,7 @@ public class HomeFragment extends Fragment implements LocationListener,
 			e.printStackTrace();
 
 		}
-
+		Toast.makeText(getActivity(), "Fragment Created", Toast.LENGTH_SHORT).show();
 		return view;
 	}
 
@@ -125,8 +135,32 @@ public class HomeFragment extends Fragment implements LocationListener,
 	public void onActivityCreated(Bundle savedInstanceState) {
 
 		super.onActivityCreated(savedInstanceState);
-
-		attachButton = (Button) getActivity().findViewById(R.id.attachButton);
+		
+		mHandler = new Handler();
+		
+		Toast.makeText(getActivity(), "Fragment onActivityCreated()", Toast.LENGTH_SHORT).show();
+		mCustomImageView = (CustomImageView) getActivity().findViewById(R.id.attachButton);
+		
+	
+			mRunnable = new Runnable() {
+				
+				@Override
+				public void run() {
+					
+					//Working Sexy
+					//ObjectAnimator.ofFloat(mCustomImageView, "alpha", 0.1f, 1f, 0.1f).setDuration(5000).start();
+					ObjectAnimator.ofFloat(mCustomImageView, "rotation", 0f, 360f).setDuration(2000).start();
+					mHandler.postDelayed(this, 4000);
+					try{
+						
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+					
+				}
+			};
+			mHandler.postDelayed(mRunnable, 4000);
+		
 		addressTextV = (TextView) getActivity().findViewById(
 				R.id.addressTextView);
 		mLayout = (LinearLayout) getActivity().findViewById(
@@ -144,7 +178,7 @@ public class HomeFragment extends Fragment implements LocationListener,
 			}
 			// mLayout = (LinearLayout)
 			// getActivity().findViewById(R.id.mapsLayoutID);
-			attachButton.setOnClickListener(new OnClickListener() {
+			mCustomImageView.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
@@ -152,6 +186,11 @@ public class HomeFragment extends Fragment implements LocationListener,
 					Toast.makeText(getActivity(), "Location Saved",
 							Toast.LENGTH_SHORT).show();
 					if (locationManager != null) {
+						
+						mVibrater = (Vibrator)getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+						if(mVibrater.hasVibrator()){							
+							mVibrater.vibrate(100);
+						}
 						CaptureScreenShot();
 					}
 				}
@@ -401,11 +440,21 @@ public class HomeFragment extends Fragment implements LocationListener,
 	// @Override
 	// public void onDestroyView() {
 	// super.onDestroyView();
-	//
+	// 
 	// Fragment f = getFragmentManager().findFragmentById(R.id.map);
 	// if (f != null){
 	// getFragmentManager().beginTransaction().remove(f).commitAllowingStateLoss();
 	// }
 	// }
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onDestroyView()
+	 */
+	@Override
+	public void onDestroyView() {
+		// TODO Auto-generated method stub
+		super.onDestroyView();
+		Toast.makeText(getActivity(), "Fragment Destroyed", Toast.LENGTH_SHORT).show();
+	}
+	
 }

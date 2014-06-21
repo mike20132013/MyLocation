@@ -25,7 +25,7 @@ public class CustomImageView extends ImageView {
 	ObjectAnimator obj_animator;
 	private static final int ANIMATION_TIME_ID = android.R.integer.config_longAnimTime;
 	int pressedRingWidth;
-	private static final int DEFAULT_PRESSED_RING_WIDTH_DIP = 8;
+	private static final int DEFAULT_PRESSED_RING_WIDTH_DIP = 4;
 	private int centerY;
 	private int centerX;
 	private int outerRadius;
@@ -35,7 +35,7 @@ public class CustomImageView extends ImageView {
 	private Paint focusPaint;
 	private int defaultColor = Color.BLACK;
 	private int pressedColor;
-	private static final int PRESSED_COLOR_LIGHTUP = 255 / 25;
+	private static final int PRESSED_COLOR_LIGHTUP = 205 / 25;
 	private static final int PRESSED_RING_ALPHA = 100;
 
 	/**
@@ -141,6 +141,12 @@ public class CustomImageView extends ImageView {
 	public void setPressed(boolean pressed) {
 		// TODO Auto-generated method stub
 		super.setPressed(pressed);
+		
+		if (circlePaint != null) {
+			//circlePaint.setColor(pressed ? pressedColor : defaultColor);
+			circlePaint.setColor(Color.parseColor("#CC4E5C"));
+		}
+		
 		if (pressed) {
 
 			showPressedAnimation();
@@ -156,7 +162,7 @@ public class CustomImageView extends ImageView {
 	public void setColor(int color) {
 		this.defaultColor = color;
 		this.pressedColor = getHighlightColor(color, PRESSED_COLOR_LIGHTUP);
-
+		//this.pressedColor = Color.parseColor("#CC4E5C");
 		circlePaint.setColor(defaultColor);
 		focusPaint.setColor(defaultColor);
 		focusPaint.setAlpha(PRESSED_RING_ALPHA);
