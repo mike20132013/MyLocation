@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="#222222"
     android:orientation="vertical"
     android:paddingBottom="5dp"
@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:orientation="vertical" >
 
         <TextView
@@ -22,20 +22,42 @@
             android:gravity="center"
             android:text="Places Near You"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#cccccc" />
+            android:textColor="#cccccc"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="7dp"
+            android:background="#555555" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/places_pager"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="#EEAD0E" >
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="7dp"
+            android:background="#333333" >
         </android.support.v4.view.ViewPager>
 
-        <ListView
-            android:id="@+id/places_listview"
+        <com.mike.customlistview.NestedListView
+            android:id="@+id/crewList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </ListView>
+            android:layout_height="match_parent"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="7dp"
+            android:layout_weight="1"
+            android:background="#f3f3f3"
+            android:cacheColorHint="#00000000" >
+        </com.mike.customlistview.NestedListView>
     </LinearLayout>
 
 </ScrollView>

@@ -17,9 +17,9 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 import com.google.android.gms.maps.SupportMapFragment;
 import com.mike.adapters.AllPagesAdapter;
-import com.mike.adapters.HistoryFragment;
-import com.mike.adapters.HomeFragment;
-import com.mike.adapters.NearbyPlaces;
+import com.mike.fragments.HistoryFragment;
+import com.mike.fragments.HomeFragment;
+import com.mike.fragments.NearbyPlacesFragment;
 import com.mike.listeners.FragmentTabListener;
 
 /**

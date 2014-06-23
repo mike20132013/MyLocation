@@ -1,15 +1,12 @@
 /**
  * 
  */
-package com.mike.adapters;
+package com.mike.fragments;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.animation.ObjectAnimator;
 import android.app.ProgressDialog;
@@ -22,13 +19,11 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,15 +83,7 @@ public class HomeFragment extends Fragment implements LocationListener,
 	ProgressDialog mProgressDialog;
 	SupportMapFragment fm;
 	Vibrator mVibrater;
-
-	public static final String MAIN_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=42.29543187,-71.47470374&radius=1000&types=food&sensor=true&key=AIzaSyAaDaMUimX4NRgapY-keH18ZYnAmHRNnn4";
-	public static String FIRST_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
-	public static String SECOND_URL = "location=";
-	public static String THIRD_URL = "&radius=";
-	public static String FOURTH_URL = "&types=";
-	public static String FIFTH_URL = "&sensor=true";
-	public static String SIXTH_URL = "&key=AIzaSyAaDaMUimX4NRgapY-keH18ZYnAmHRNnn4";
-
+	
 	ClearingCodeActivity activity;
 	CustomImageView mCustomImageView;
 	
@@ -135,7 +122,7 @@ public class HomeFragment extends Fragment implements LocationListener,
 	public void onActivityCreated(Bundle savedInstanceState) {
 
 		super.onActivityCreated(savedInstanceState);
-		
+				
 		mHandler = new Handler();
 		
 		Toast.makeText(getActivity(), "Fragment onActivityCreated()", Toast.LENGTH_SHORT).show();
@@ -170,14 +157,7 @@ public class HomeFragment extends Fragment implements LocationListener,
 
 		mAppUtils = new AppUtils(getActivity());
 		if (mAppUtils.servicesOK()) {
-			// Toast.makeText(this, "Ready to map!!", Toast.LENGTH_LONG).show();
-			// setContentView(R.layout.activity_main);
 
-			if (MAIN_URL != null) {
-				new BackTask(MAIN_URL).execute();
-			}
-			// mLayout = (LinearLayout)
-			// getActivity().findViewById(R.id.mapsLayoutID);
 			mCustomImageView.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -196,11 +176,6 @@ public class HomeFragment extends Fragment implements LocationListener,
 				}
 			});
 
-			// Getting reference to the SupportMapFragment of activity_main.xml
-			/*
-			 * SupportMapFragment fm = (SupportMapFragment) getFragmentManager()
-			 * .findFragmentById(R.id.map);
-			 */
 			((SupportMapFragment) (getActivity().getSupportFragmentManager()
 					.findFragmentById(R.id.map))).getMap();
 
@@ -306,68 +281,10 @@ public class HomeFragment extends Fragment implements LocationListener,
 		String latLong = "Latitude : " + String.valueOf(thisLat) + "\n"
 				+ "Longitude : " + String.valueOf(thisLong) + "\n";
 		if (addressLine != null) {
-			// addressTextV.setText(addressLine);
 			addressTextV.setText(latLong + addressLine);
 		} else {
 			Toast.makeText(getActivity(), "Location Data Null",
 					Toast.LENGTH_SHORT).show();
-		}
-
-	}
-
-	public void PlaceApi(String URL) {
-
-		try {
-			JSONObject mainJsonObject = new JSONObject(mAppUtils.loadJSON(URL));
-			String mainJsonString = mainJsonObject.toString();
-			Log.d("JSON Object : ", mainJsonString);
-		} catch (JSONException e) {
-
-			e.printStackTrace();
-		}
-
-	}
-
-	public class BackTask extends AsyncTask<Void, Integer, Void> {
-
-		String url;
-
-		// ProgressDialog mProgressDialog;
-
-		public BackTask(String URL) {
-
-			this.url = URL;
-
-		}
-
-		@Override
-		protected void onPreExecute() {
-
-			super.onPreExecute();
-
-		}
-
-		@Override
-		protected Void doInBackground(Void... params) {
-
-			PlaceApi(url);
-			return null;
-		}
-
-		@Override
-		protected void onProgressUpdate(Integer... values) {
-
-			super.onProgressUpdate(values);
-
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-
-			super.onPostExecute(result);
-
-			mLayout.setVisibility(View.VISIBLE);
-
 		}
 
 	}
@@ -437,22 +354,8 @@ public class HomeFragment extends Fragment implements LocationListener,
 				1, this);
 	}
 
-	// @Override
-	// public void onDestroyView() {
-	// super.onDestroyView();
-	// 
-	// Fragment f = getFragmentManager().findFragmentById(R.id.map);
-	// if (f != null){
-	// getFragmentManager().beginTransaction().remove(f).commitAllowingStateLoss();
-	// }
-	// }
-
-	/* (non-Javadoc)
-	 * @see android.support.v4.app.Fragment#onDestroyView()
-	 */
 	@Override
 	public void onDestroyView() {
-		// TODO Auto-generated method stub
 		super.onDestroyView();
 		Toast.makeText(getActivity(), "Fragment Destroyed", Toast.LENGTH_SHORT).show();
 	}

@@ -27,7 +27,7 @@ public class TabActivity extends FragmentActivity implements
 	private ViewPager mViewPager;
 	private ActionBar mActionBar;
 	private AllPagesAdapter mPagesAdapter;
-	private String[] tabs = { "Map View", "Nearby Places" };
+	private String[] tabs = { "Map Home", "Nearby Places" };
 
 	@Override
 	protected void onCreate(Bundle arg0) {

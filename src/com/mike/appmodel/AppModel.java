@@ -18,6 +18,9 @@ public class AppModel {
 	private String locality;
 	private String device_imageUrls;
 	private String web_imageUrls;
+	
+	private String infoList;
+	private String addressList;
 
 
 	/**
@@ -182,6 +185,34 @@ public class AppModel {
 	 */
 	public void setID(int iD) {
 		ID = iD;
+	}
+
+	/**
+	 * @return the infoList
+	 */
+	public String getInfoList() {
+		return infoList;
+	}
+
+	/**
+	 * @param infoList the infoList to set
+	 */
+	public void setInfoList(String infoList) {
+		this.infoList = infoList;
+	}
+
+	/**
+	 * @return the addressList
+	 */
+	public String getAddressList() {
+		return addressList;
+	}
+
+	/**
+	 * @param addressList the addressList to set
+	 */
+	public void setAddressList(String addressList) {
+		this.addressList = addressList;
 	}
 
 }
