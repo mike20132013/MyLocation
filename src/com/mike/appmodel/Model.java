@@ -22,6 +22,7 @@ public class Model {
 	private String infoList;
 	private String addressList;
 	private String placeName;
+	private String placeType;
 	
 	public Model(){
 		
@@ -218,6 +219,20 @@ public class Model {
 	 */
 	public void setPlaceName(String placeName) {
 		this.placeName = placeName;
+	}
+
+	/**
+	 * @return the placeType
+	 */
+	public String getPlaceType() {
+		return placeType;
+	}
+
+	/**
+	 * @param placeType the placeType to set
+	 */
+	public void setPlaceType(String placeType) {
+		this.placeType = placeType;
 	}
 	
 }

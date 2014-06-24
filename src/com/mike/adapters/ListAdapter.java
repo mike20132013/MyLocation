@@ -63,25 +63,54 @@ public class ListAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		if (convertView == null) {
-
-			LayoutInflater inflater = (LayoutInflater) context
-					.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.history_list_item, null);
-		}
-
-		TextView infoText = (TextView) convertView
-				.findViewById(R.id.historytextView1);
-		TextView infoText2 = (TextView) convertView
-				.findViewById(R.id.historytextView2);
-		TextView infoText3 = (TextView) convertView
-				.findViewById(R.id.historytextView3);
+		ViewHolder mViewHolder;
+		View view = convertView;
+		LayoutInflater inflater = (LayoutInflater) context
+				.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		
-		infoText.setText(infoArray2.get(position).getSomeItem());
-		infoText2.setText(placenameArrayList.get(position).getSomeItem());
-		infoText3.setText(addressArrayList.get(position).getSomeItem());
-
-		return convertView;
+		if(view == null){
+			
+			view = inflater.inflate(R.layout.history_list_item, null);
+			
+			mViewHolder = new ViewHolder();
+			
+			if(view!=null){
+				
+				mViewHolder.tv1 = (TextView) view.findViewById(R.id.historytextView1);
+				mViewHolder.tv2 = (TextView) view.findViewById(R.id.historytextView2);
+				mViewHolder.tv3 = (TextView) view.findViewById(R.id.historytextView3);
+				
+			}
+			
+			view.setTag(mViewHolder);
+			
+		}else{
+			
+			mViewHolder = (ViewHolder) view.getTag();
+			
+		}
+		
+		TextView infoText = mViewHolder.tv1;
+		TextView infoText2 = mViewHolder.tv2;
+		TextView infoText3 = mViewHolder.tv3;
+		
+		try{
+			
+			infoText.setText(infoArray2.get(position).getSomeItem());
+			infoText2.setText(placenameArrayList.get(position).getSomeItem());
+			infoText3.setText(addressArrayList.get(position).getSomeItem());
+			
+		}catch(Exception e){
+			e.printStackTrace();			
+		}
+		
+		return view;
+	}
+	
+	public static class ViewHolder{
+		
+		TextView tv1,tv2,tv3;
+		
 	}
 
 }

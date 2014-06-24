@@ -9,7 +9,6 @@ import android.content.Context;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mike.appmodel.AppModel;
+import com.mike.appmodel.Model;
 import com.mike.imageutils.ImageLoader;
 import com.mike.mylocation.R;
 
@@ -26,12 +26,15 @@ import com.mike.mylocation.R;
  */
 public class NearbyPlacesAdapter extends PagerAdapter {
 
-	ArrayList<AppModel> imagesArrayList = new ArrayList<AppModel>();
-	ArrayList<AppModel> infoArrayList = new ArrayList<AppModel>();
-	ArrayList<AppModel> addressArrayList = new ArrayList<AppModel>();
+	ArrayList<Model> imagesArrayList = new ArrayList<Model>();
+	
+	ArrayList<Model> infoArrayList = new ArrayList<Model>();
+	
+	ArrayList<Model> addressArrayList = new ArrayList<Model>();
+	
 	private ImageLoader mImageLoader;
+	
 	private Context context;
-	ArrayList<String> iArrays = new ArrayList<String>();
 	
 	/**
 	 * 
@@ -41,15 +44,12 @@ public class NearbyPlacesAdapter extends PagerAdapter {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public NearbyPlacesAdapter(ArrayList<String> iArray){
-		super();
-		this.iArrays = iArray;
-	}
-
-	public NearbyPlacesAdapter(Context context,ArrayList<AppModel> imageArray){
+	public NearbyPlacesAdapter(Context context,ArrayList<Model> imageArray){
 		
 		super();
+		this.context = context;
 		this.imagesArrayList = imageArray;
+		
 	}
 	
 	
@@ -59,9 +59,9 @@ public class NearbyPlacesAdapter extends PagerAdapter {
 	 * @param addressArrayList
 	 */
 	public NearbyPlacesAdapter(Context context,
-			ArrayList<AppModel> imagesArrayList,
-			ArrayList<AppModel> infoArrayList,
-			ArrayList<AppModel> addressArrayList) {
+			ArrayList<Model> imagesArrayList,
+			ArrayList<Model> infoArrayList,
+			ArrayList<Model> addressArrayList) {
 		super();
 		this.context = context;
 		this.imagesArrayList = imagesArrayList;
@@ -90,13 +90,14 @@ public class NearbyPlacesAdapter extends PagerAdapter {
 		View convertView = container;
 		
 		LayoutInflater inflater = (LayoutInflater)container.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
+		if(convertView==null)
 		convertView = inflater.inflate(R.layout.places_row_layout, null);
 		
-		ImageView mImageView = (ImageView)convertView.findViewById(R.id.places_row_imageview);
-		TextView mTextView = (TextView)convertView.findViewById(R.id.places_row_textview);
-		mTextView.setText(iArrays.get(position));
-		//mImageLoader.DisplayImage(imagesArrayList.get(position).getWeb_imageUrls(), R.drawable.cameraicon, mImageView);
+		//ImageView mImageView = (ImageView)convertView.findViewById(R.id.places_row_imageview);
+		TextView mTextView = (TextView)convertView.findViewById(R.id.historytextView1);
+		
+		mTextView.setText(imagesArrayList.get(position).getSomeItem());
+		//mImageLoader.DisplayImage(imagesArrayList.get(position).getSomeItem(), R.drawable.cameraicon, mImageView);
 		//mImageLoader.DisplayImage(imgArrays.get(position), R.drawable.cameraicon, mImageView);
 		
 /*		ViewHolder mViewHolder;
