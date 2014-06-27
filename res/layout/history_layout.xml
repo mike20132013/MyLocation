@@ -42,7 +42,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/places_pager"
             android:layout_width="match_parent"
-            android:layout_height="275dp"
+            android:layout_height="285dp"
             android:layout_marginBottom="7dp"
             android:layout_marginLeft="7dp"
             android:layout_marginRight="7dp"
@@ -64,7 +64,9 @@
             android:layout_marginTop="7dp"
             android:layout_weight="1"
             android:background="#f3f3f3"
-            android:cacheColorHint="#00000000" >
+            android:cacheColorHint="#00000000"
+            android:divider="#29506D"
+            android:dividerHeight="12dp" >
         </com.mike.customlistview.NestedListView>
     </LinearLayout>
 

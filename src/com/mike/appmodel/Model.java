@@ -23,6 +23,7 @@ public class Model {
 	private String addressList;
 	private String placeName;
 	private String placeType;
+	private String sdcardUrls;
 	
 	public Model(){
 		
@@ -226,6 +227,20 @@ public class Model {
 	 */
 	public String getPlaceType() {
 		return placeType;
+	}
+
+	/**
+	 * @return the sdcardUrls
+	 */
+	public String getSdcardUrls() {
+		return sdcardUrls;
+	}
+
+	/**
+	 * @param sdcardUrls the sdcardUrls to set
+	 */
+	public void setSdcardUrls(String sdcardUrls) {
+		this.sdcardUrls = sdcardUrls;
 	}
 
 	/**

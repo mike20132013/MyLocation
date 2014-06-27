@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mike.appmodel.Model;
+import com.mike.imageutils.ImageLoader;
 import com.mike.mylocation.R;
 
 /**
@@ -28,6 +30,8 @@ public class ListAdapter extends BaseAdapter {
 	private ArrayList<Model> addressArrayList = new ArrayList<Model>();;
 	private ArrayList<Model> placenameArrayList = new ArrayList<Model>();;
 
+	private ImageLoader mImageLoader;
+	
 	public ListAdapter() {
 		super();
 	}
@@ -39,6 +43,7 @@ public class ListAdapter extends BaseAdapter {
 		this.infoArray2 = infoArray2;
 		this.placenameArrayList = placeArray;
 		this.addressArrayList = addressArray;
+		mImageLoader = new ImageLoader(context.getApplicationContext());
 	}
 
 	@Override
@@ -70,7 +75,7 @@ public class ListAdapter extends BaseAdapter {
 		
 		if(view == null){
 			
-			view = inflater.inflate(R.layout.history_list_item, null);
+			view = inflater.inflate(R.layout.history_listview_items, null);
 			
 			mViewHolder = new ViewHolder();
 			
@@ -79,7 +84,7 @@ public class ListAdapter extends BaseAdapter {
 				mViewHolder.tv1 = (TextView) view.findViewById(R.id.historytextView1);
 				mViewHolder.tv2 = (TextView) view.findViewById(R.id.historytextView2);
 				mViewHolder.tv3 = (TextView) view.findViewById(R.id.historytextView3);
-				
+				mViewHolder.img1 = (ImageView)view.findViewById(R.id.historyImageView);
 			}
 			
 			view.setTag(mViewHolder);
@@ -93,12 +98,14 @@ public class ListAdapter extends BaseAdapter {
 		TextView infoText = mViewHolder.tv1;
 		TextView infoText2 = mViewHolder.tv2;
 		TextView infoText3 = mViewHolder.tv3;
+		ImageView img1 = mViewHolder.img1;
 		
 		try{
 			
-			infoText.setText(infoArray2.get(position).getSomeItem());
-			infoText2.setText(placenameArrayList.get(position).getSomeItem());
-			infoText3.setText(addressArrayList.get(position).getSomeItem());
+			mImageLoader.DisplayImage(infoArray2.get(position).getSomeItem(),R.drawable.ic_drawer, img1);
+//			infoText.setText(infoArray2.get(position).getSomeItem());
+//			infoText2.setText(placenameArrayList.get(position).getSomeItem());
+//			infoText3.setText(addressArrayList.get(position).getSomeItem());
 			
 		}catch(Exception e){
 			e.printStackTrace();			
@@ -110,6 +117,7 @@ public class ListAdapter extends BaseAdapter {
 	public static class ViewHolder{
 		
 		TextView tv1,tv2,tv3;
+		ImageView img1;
 		
 	}
 

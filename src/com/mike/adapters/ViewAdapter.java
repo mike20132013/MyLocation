@@ -28,10 +28,6 @@ public class ViewAdapter extends PagerAdapter {
 
 	Context context;
 
-	private static String splitChars;
-
-	StringBuilder sb;
-
 	ArrayList<Model> infoArrayList = new ArrayList<Model>();
 
 	ArrayList<Model> addressArrayList = new ArrayList<Model>();
@@ -44,9 +40,11 @@ public class ViewAdapter extends PagerAdapter {
 
 	ArrayList<Model> placetypeArrayList = new ArrayList<Model>();
 
-	private static TextView placetypeTextView;
-
 	private ImageLoader mImageLoader;
+
+	private static String splitChars;
+	
+	private StringBuilder sb;
 
 	/**
 	 * @param context
@@ -170,9 +168,9 @@ public class ViewAdapter extends PagerAdapter {
 			view.setTag(mViewHolder);
 			
 		}
-		ViewHolder mViewHolder = (ViewHolder) view.getTag();
 		
 		//Retrieving Data
+		ViewHolder mViewHolder = (ViewHolder) view.getTag();
 		
 		TextView latitudeTextView = mViewHolder.latText;
 		TextView longitudeTextView = mViewHolder.latText;

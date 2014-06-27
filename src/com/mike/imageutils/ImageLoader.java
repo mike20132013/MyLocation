@@ -41,7 +41,6 @@ public class ImageLoader {
 
     int stub_id = R.drawable.ic_launcher;
 
-
     public void DisplayImage(String url, int loader, ImageView imageView) {
         stub_id = loader;
         imageViews.put(imageView, url);
